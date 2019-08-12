@@ -10,22 +10,27 @@ export default class Grid extends Component {
 			moveRow: 0,
 			moveColumn: 0,
 			fruitCoords: [ 1, 1 ],
-			direction: 'ArrowRight'
+			direction: 'ArrowRight',
+			speed: 8,
+			speedMultiplier: 1
 		};
 	}
+
+	componentDidMount = () => {
+		document.addEventListener('keydown', this.keyListener);
+		this.intervalID = window.setInterval(this.gameLoop, 200);
+	};
+
+	gameLoop = () => {
+		this.move();
+	};
 
 	keyListener = (event) => {
 		switch (event.key) {
 			case 'ArrowLeft':
-				if (this.state.direction === 'right') {
-					break;
-				}
 				this.setState({ moveColumn: -1, moveRow: 0, nextDirection: 'left' });
 				break;
 			case 'ArrowRight':
-				if (this.state.direction === 'left') {
-					break;
-				}
 				this.setState({ moveColumn: 1, moveRow: 0, nextDirection: 'right' });
 				break;
 			case 'ArrowDown':
@@ -35,13 +40,14 @@ export default class Grid extends Component {
 				this.setState({ moveColumn: 0, moveRow: 1, nextDirection: 'down' });
 				break;
 			case 'ArrowUp':
-				if (this.state.direction === 'down') {
-					break;
-				}
 				this.setState({ moveColumn: 0, moveRow: -1, nextDirection: 'up' });
 				break;
 		}
 		console.log(this.state.direction);
+	};
+
+	move = () => {
+		this.setState({ row: this.state.row + this.state.moveRow, column: this.state.column + this.state.moveColumn });
 	};
 
 	render() {
