@@ -18,7 +18,7 @@ export default class Grid extends Component {
 
 	componentDidMount = () => {
 		document.addEventListener('keydown', this.keyListener);
-		this.intervalID = window.setInterval(this.gameLoop, 200);
+		this.intervalID = window.setInterval(this.gameLoop, 100);
 	};
 
 	gameLoop = () => {
@@ -28,10 +28,10 @@ export default class Grid extends Component {
 	keyListener = (event) => {
 		switch (event.key) {
 			case 'ArrowLeft':
-				this.setState({ moveColumn: -1, moveRow: 0, nextDirection: 'left' });
+				this.setState({ moveColumn: -1, moveRow: 1, nextDirection: 'left' });
 				break;
 			case 'ArrowRight':
-				this.setState({ moveColumn: 1, moveRow: 0, nextDirection: 'right' });
+				this.setState({ moveColumn: 1, moveRow: 1, nextDirection: 'right' });
 				break;
 			case 'ArrowDown':
 				if (this.state.direction === 'up') {
