@@ -10,7 +10,7 @@ export default class Grid extends Component {
 			column: 1,
 			moveRow: 0,
 			moveColumn: 0,
-			treeCoords: [ 1, 1 ],
+			treeCoords: [ [ Math.floor(Math.random() * 30) + 1, Math.floor(Math.random() * 30) + 1 ] ],
 			direction: 'ArrowRight'
 		};
 	}
@@ -50,16 +50,28 @@ export default class Grid extends Component {
 	};
 
 	generateTrees = () => {
+		console.log(this.state.treeCoords);
 		let newRow = Math.floor(Math.random() * 30) + 1;
 		let newCol = Math.floor(Math.random() * 30) + 1;
+		let treeArray = [ [ newRow, newCol ] ];
 		this.setState({ treeCoords: [ newRow, newCol ] });
+		for (let i = 0; i < 15; i++) {
+			newRow = Math.floor(Math.random() * 30) + 1;
+			newCol = Math.floor(Math.random() * 30) + 1;
+			treeArray.push([ newRow, newCol ]);
+		}
+		this.setState({ treeCoords: treeArray });
+		console.log(treeArray);
+		console.log(this.state.treeCoords);
 	};
 
 	render() {
 		return (
 			<div className="grid">
 				<Skier row={this.state.row} column={this.state.column} />
-				<Tree row={this.state.treeCoords[0]} col={this.state.treeCoords[1]} />
+				{this.state.treeCoords.map((tree) => {
+					return <Tree row={tree[0]} col={tree[1]} />;
+				})}
 			</div>
 		);
 	}
